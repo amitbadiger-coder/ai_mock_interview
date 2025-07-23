@@ -65,4 +65,33 @@
   body {
     @apply bg-background text-foreground;
   }
+  .text-outline{
+    color: white;
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.6),
+                  1px  -1px 0 rgba(0,0,0,0.6),
+                  -1px  1px 0 rgba(0,0,0,0.6),
+                  1px  1px 0 rgba(0,0,0,0.6);
+                 
+  }
+  @keyframes floatGlow {
+  0%, 100% {
+    transform: translateY(0);
+    text-shadow:
+      0 0 5px rgba(0,0,0,0.6),
+      0 0 10px rgba(0,0,0,0.6),
+      0 0 15px rgba(0,0,0,0.6);
+  }
+  50% {
+    transform: translateY(-5px);
+    text-shadow:
+      0 0 10px rgba(0,0,0,0.9),
+      0 0 20px rgba(0,0,0,0.9),
+      0 0 30px rgba(0,0,0,0.9);
+  }
+}
+
+.animate-floatGlow {
+  animation: floatGlow 3s ease-in-out infinite;
+}
+
 }
