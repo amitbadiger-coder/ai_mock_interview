@@ -6,6 +6,9 @@ import SignIn from "@/components/SignInPage"
 import SignUp from "@/components/SignUpPage"
 import ProtectedRoute from "@/layout/ProtectedRoute"
 import MainLayout from "@/layout/MainLayout"
+import { Generate } from "./components/Generate"
+import Dashboard from "./components/Routes/Dashboard"
+import CreateEditPage from "./components/Routes/CreateEditPage"
 
 const App = () => {
   return (
@@ -24,7 +27,11 @@ const App = () => {
         {/* protected layout */}
         <Route element={<ProtectedRoute><MainLayout/></ProtectedRoute>}>
          {/* here we have to add the protected routes */}
-         
+         <Route  path="/generate" element={<Generate/>}>
+         <Route index element={<Dashboard/>}/>
+         <Route path=":interviewId" element={<CreateEditPage/>}/>
+
+         </Route>
         </Route>
         
       </Routes>

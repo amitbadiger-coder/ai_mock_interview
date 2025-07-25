@@ -6,16 +6,17 @@ import { MarkImage } from "./MarkImage"
 import { Link } from "react-router-dom"
 
 
+
 const HomePage = () => {
   return (
     <div className="flex-col w-full pb-24">
       <Container>
         <div className="my-8">
           <h2 className="text-3xl text-center md:text-left md:text-6xl">
-            <span className="text-outline animate-floatGlow font-extrabold md:text-8xl">AI SUPERPOWER</span>
+            <span className="text-outline animate-floatGlow font-extrabold md:text-8xl">AI POWER</span>
 
             <span className="text-gray-500 font-extrabold">-A Better Way To</span><br/>
-            improve your interview chances and skills
+             improve your interview chances and skills
           </h2>
           <p className="mt-4 text-muted-foreground text-sm">
             Boost your interview skills and increase your success Rate  with AI Driven insights.
