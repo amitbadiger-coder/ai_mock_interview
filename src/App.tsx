@@ -9,6 +9,8 @@ import MainLayout from "@/layout/MainLayout"
 import { Generate } from "./components/Generate"
 import Dashboard from "./components/Routes/Dashboard"
 import CreateEditPage from "./components/Routes/CreateEditPage"
+import MockLoadPage from "./components/Routes/MockLoadPage"
+import MockInterviewPage from "./components/Routes/MockInterviewPage"
 
 const App = () => {
   return (
@@ -30,6 +32,8 @@ const App = () => {
          <Route  path="/generate" element={<Generate/>}>
          <Route index element={<Dashboard/>}/>
          <Route path=":interviewId" element={<CreateEditPage/>}/>
+         <Route path="interview/:interviewId" element={<MockLoadPage/>}/>
+         <Route path="interview/:interviewId/start" element={<MockInterviewPage/>}/>
 
          </Route>
         </Route>

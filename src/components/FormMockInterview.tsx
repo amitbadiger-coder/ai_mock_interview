@@ -15,23 +15,15 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/f
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { chatSession } from "@/scripts";
+import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import { db } from "@/config/Firebase.config";
 
 
 interface FormMockInterviewprops{
     initialData:Interview | null;
 }
 
-// const formSchema = z.object({
-//   position: z
-//     .string()
-//     .min(1, "Position is required")
-//     .max(100, "Position must be 100 characters or less"),
-//   description: z.string().min(5, "Description is required"),
-//   experience: z.coerce
-//     .number()
-//     .min(0, "Experience cannot be empty or negative"),
-//   techStack: z.string().min(1, "Tech stack must be at least a character"),
-// });
+
 const formSchema = z.object({
   position: z
     .string()
@@ -44,17 +36,12 @@ const formSchema = z.object({
   techStack: z.string().min(1, "Tech stack must be at least a character"),
 });
 
-// type FormData = z.infer<typeof formSchema>;
+
 
 type FormData = z.infer<typeof formSchema>;
 
 
 const FormMockInterview = ({initialData}:FormMockInterviewprops) => {
-
-  // const form = useForm<FormData>({
-  //   resolver: zodResolver(formSchema),
-  //   defaultValues: initialData || {},
-  // });
   const form = useForm<FormData>({
   resolver: zodResolver(formSchema),
   defaultValues: {
@@ -70,15 +57,18 @@ const FormMockInterview = ({initialData}:FormMockInterviewprops) => {
   const navigate=useNavigate();
   const {userId}=useAuth();
 
-  const title = initialData?.position ? initialData?.position : "Create A new Mock Interview";
+  const title = initialData
+    ? initialData.position
+    : "Create a new mock interview";
 
-  const breadCrumbPage = initialData?.position ? "Edit" :"Create";
+  const breadCrumbPage = initialData ? initialData?.position : "Create";
+  const action = initialData ? "Save Changes" : "Create";
+  const toastMessage = initialData
+    ? { title: "Updated..!", description: "Changes saved successfully..." }
+    : { title: "Created..!", description: "New Mock Interview created..." };
 
-  const action = initialData? "save Changes": "create";
 
-  const toastMessage = initialData? {title:"upload..!",description:"changes saved successfully..."}:{title:"created..!",description:"New Mock Interview Created..."}
-
- const cleanAiResponse = (responseText: string) => {
+  const cleanAiResponse = (responseText: string) => {
     // Step 1: Trim any surrounding whitespace
     let cleanText = responseText.trim();
 
@@ -100,7 +90,6 @@ const FormMockInterview = ({initialData}:FormMockInterviewprops) => {
       throw new Error("Invalid JSON format: " + (error as Error)?.message);
     }
   };
-
   const generateAiResponse = async(data: FormData)=>{
     const prompt = `
         As an experienced prompt engineer, generate a JSON array containing 5 technical interview questions along with detailed answers based on the following job information. Each object in the array should have the fields "question" and "answer", formatted as follows:
@@ -127,28 +116,49 @@ const FormMockInterview = ({initialData}:FormMockInterviewprops) => {
   } 
 
 
-  const onSubmit= async(data: FormData)=>{
-   try {
-    setLoading(true);
-    if (initialData) {
+  const onSubmit = async (data: FormData) => {
+    try {
+      setLoading(true);
 
-      
-    } else {
-      if(isValid){
-        const aiResult = await generateAiResponse(data);
+      if (initialData) {
+        // update
+        if (isValid) {
+          const aiResult = await generateAiResponse(data);
+
+          await updateDoc(doc(db, "interviews", initialData?.id), {
+            questions: aiResult,
+            ...data,
+            updatedAt: serverTimestamp(),
+          }).catch((error) => console.log(error));
+          toast(toastMessage.title, { description: toastMessage.description });
+        }
+      } else {
+        // create a new mock interview
+        if (isValid) {
+          const aiResult = await generateAiResponse(data);
+
+          await addDoc(collection(db, "interviews"), {
+            ...data,
+            userId,
+            questions: aiResult,
+            createdAt: serverTimestamp(),
+          });
+
+          toast(toastMessage.title, { description: toastMessage.description });
+        }
       }
-      
+
+      navigate("/generate", { replace: true });
+    } catch (error) {
+      console.log(error);
+      toast.error("Error..", {
+        description: `Something went wrong. Please try again later`,
+      });
+    } finally {
+      setLoading(false);
     }
-   } catch (error) {
-    console.log(error);
-    toast.error("Error...",{
-      description:`Something went wrong please try again later`,
-    });
-   }
-   finally{
-    setLoading(false);
-   }
   };
+
 
   useEffect(()=>{
     if(initialData){
@@ -296,11 +306,11 @@ const FormMockInterview = ({initialData}:FormMockInterviewprops) => {
               size={"sm"}
               disabled={isSubmitting || loading || !isValid}
               >
-                {
-                  loading ? 
-                    <Loader className="text-gray-50 animate-spin"/>
-                  :action
-                }
+                {loading ? (
+                <Loader className="text-gray-50 animate-spin" />
+              ) : (
+                action
+              )}
               </Button>
             </div>
           </form>

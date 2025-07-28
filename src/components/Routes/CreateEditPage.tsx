@@ -7,15 +7,15 @@ import FormMockInterview from "../FormMockInterview"
 
 
 const CreateEditPage = () => {
-    const {InterviewId}= useParams<{InterviewId:string}>()
+    const {interviewId}= useParams<{interviewId:string}>();
     const[interview,setInterview]=useState<Interview | null>(null);
     useEffect(()=>{
         const fetchInterview = async()=>{
-            if(InterviewId){
+            if(interviewId){
                 try {
-                    const interviewDoc = await getDoc(doc(db,"interviews",InterviewId));
+                    const interviewDoc = await getDoc(doc(db,"interviews",interviewId));
                     if(interviewDoc.exists()){
-                        setInterview({...interviewDoc.data}as Interview)
+                        setInterview({ id: interviewDoc.id, ...interviewDoc.data()}as Interview)
                     }
                 } catch (error) {
                     console.log(error)
@@ -24,7 +24,7 @@ const CreateEditPage = () => {
         }
         fetchInterview();
 
-    },[InterviewId])
+    },[interviewId])
   return (
     <div className="my-4 flex-col w-full ">
         <FormMockInterview initialData={interview}/>
