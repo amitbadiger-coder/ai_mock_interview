@@ -22,3 +22,16 @@ export interface Interview{
     updateAt:Timestamp;
 
 }
+
+export interface UserAnswers{
+    id:string;
+    mockIdRef:string;
+    question:string;
+    correct_ans:string;
+    user_ans:string;
+    feedback:string;
+    rating:string;
+    userId:string;
+    createdAt:Timestamp
+    updatedAt:Timestamp
+}

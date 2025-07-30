@@ -13,12 +13,12 @@ const NavigationRoute = ({isMobile = false}:navigationRouteProp) => {
       <NavLink
       key={route.href}
       to={route.href}
-      className={({isActive})=>
-      cn(
-        "text-base text-neutral-600",
-        isActive && "text-neutral-900 font-semibold"
-      )
-      }
+      className={({ isActive }) =>
+            cn(
+              "text-base text-neutral-600 transition-all duration-200 pb-1",
+              isActive && "text-neutral-900 font-semibold border-b-2 border-neutral-900"
+            )
+          }
       >
        {route.label}
       </NavLink>

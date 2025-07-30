@@ -57,9 +57,11 @@ const HomePage = () => {
     <p className="text-sm mb-4">
       Leverage AI to guide your interview journey. Get tailored feedback, smart questions, and confidence to land your dream job.
     </p>
+    <Link to={"/generate"}>
     <Button className="flex items-center gap-2 px-4 py-2 bg-black text-white hover:bg-gray-800 transition">
       Generate <Sparkles className="w-4 h-4" />
     </Button>
+    </Link>
   </div>
 
 </div>
@@ -92,6 +94,7 @@ const HomePage = () => {
           alt="office img"
           className="w-full max-h-96 rounded-lg object-cover transition-transform duration-300 group-hover:scale-105"
         />
+        
       </div>
 
       {/* Text + Button */}
