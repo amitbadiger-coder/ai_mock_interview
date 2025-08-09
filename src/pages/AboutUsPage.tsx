@@ -2,15 +2,21 @@
 import Container from "@/components/Container";
 
 const team = [
-  {
-    name: "Sara Ahmed",
-    role: "Co-founder, AI Researcher",
-    photo: "/team/sara.jpg", // Replace with actual image paths
+ {
+    name: "Santosh Khot",
+    role: "proffesor & guide",
+    photo: "/logo1.png", // Replace with actual image paths
   },
+   {
+    name: "Suneel Shinde",
+    role: "Head of Department",
+    photo: "/logo1.png", // Replace with actual image paths
+  },
+  
   {
-    name: "Vikram Patel",
-    role: "Career Coach & Hiring Expert",
-    photo: "/team/vikram.jpg",
+    name: "Amit Badiger",
+    role: "Creater",
+    photo: "/team/mine1.jpeg",
   },
 ];
 
@@ -81,26 +87,28 @@ const AboutUsPage = () => {
 
         {/* Team */}
         <section className="mb-16">
-          <h2 className="text-2xl font-semibold text-neutral-900 mb-6 text-center">
-            Meet the Team
-          </h2>
-          <div className="flex flex-wrap justify-center gap-10">
-            {team.map(({ name, role, photo }) => (
-              <div
-                key={name}
-                className="max-w-xs text-center"
-              >
-                <img
-                  src={photo}
-                  alt={name}
-                  className="mx-auto rounded-full w-32 h-32 object-cover mb-4"
-                />
-                <h3 className="text-lg font-semibold text-neutral-900">{name}</h3>
-                <p className="text-neutral-700">{role}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+  <h2 className="text-2xl font-semibold text-neutral-900 mb-6 text-center">
+    Meet the Team
+  </h2>
+  <div className="flex flex-wrap justify-center gap-10">
+    <div className="max-w-xs text-center">
+      <img src="/logo1.png" alt="Santosh Khot" className="mx-auto rounded-md w-32 h-32 object-cover mb-4" />
+      <h3 className="text-lg font-semibold text-neutral-900">Suneel Shinde</h3>
+      <p className="text-neutral-700">Head of Department</p>
+    </div>
+    <div className="max-w-xs text-center">
+      <img src="/logo1.png" alt="Suneel Shinde" className="mx-auto rounded-md w-32 h-32 object-cover mb-4" />
+      <h3 className="text-lg font-semibold text-neutral-900">Santosh Khot</h3>
+      <p className="text-neutral-700">Proffessor And Guide</p>
+    </div>
+    <div className="max-w-xs text-center">
+      <img src="/team/mine1.jpeg" alt="Amit Badiger" className="mx-auto rounded-md w-32 h-32 object-cover mb-4" />
+      <h3 className="text-lg font-semibold text-neutral-900">Amit Badiger</h3>
+      <p className="text-neutral-700">Creator</p>
+    </div>
+  </div>
+</section>
+
 
         {/* Values */}
         <section className="mb-16">

@@ -18,6 +18,7 @@ export interface Interview{
     userId:string;
     techStack:string;
     questions:{question:string ; answer:string}[];
+    attempted?: boolean;
     createdAt:Timestamp;
     updateAt:Timestamp;
 

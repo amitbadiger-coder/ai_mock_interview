@@ -1,26 +1,28 @@
-import type { Interview } from "@/types"
-import { useAuth } from "@clerk/clerk-react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   Card,
-//   CardAction,
+  //   CardAction,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Badge, Eye, Newspaper, Sparkle } from "lucide-react";
+} from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import type { Interview } from "@/types";
+import { useAuth } from "@clerk/clerk-react";
+import { Badge, Eye, Newspaper, Sparkle } from "lucide-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { TooltipButton } from "./TooltipButton";
+import { Trash } from "lucide-react";
 interface InterviewProp{
     interview:Interview;
     onMockPage?:boolean;
+    onDelete?: (id: string) => void;
 
 }
 
-const InterviewPin = ({interview, onMockPage=false}:InterviewProp) => {
+const InterviewPin = ({interview, onMockPage=false,onDelete}:InterviewProp) => {
     const [loading, setLoading]=useState(false);
     const {userId}=useAuth();
     const navigate = useNavigate();
@@ -30,7 +32,15 @@ const InterviewPin = ({interview, onMockPage=false}:InterviewProp) => {
     <Card className="p-4 rounded-md shadow-none hover:shadow-md shadow-gray-100 cursor-pointer transition-all space-y-4">
      <CardTitle className="text-lg">{interview?.position}</CardTitle>
      <CardDescription>{interview?.description}</CardDescription>
+     {interview?.attempted && (
+    <Badge variant="secondary" className="border border-red-500 text-xs bg-yellow-200 text-black">
+  Attempted
+</Badge>
+  )}
      <div className=" w-full flex items-center gap-2 flex-wrap ">
+      
+  
+
         {interview?.techStack.split(",").map((word,index)=>(
             <Badge
             key={index}
@@ -52,6 +62,7 @@ const InterviewPin = ({interview, onMockPage=false}:InterviewProp) => {
           "en-US",{timeStyle:"short"})}`}
 
       </p>
+     
       {!onMockPage && (
         <div className="flex items-center justify-center">
           <TooltipButton
@@ -90,8 +101,22 @@ const InterviewPin = ({interview, onMockPage=false}:InterviewProp) => {
           icon={<Sparkle/>}
           loading={false}
           />
+          <TooltipButton
+  content="Delete"
+  buttonVariant="ghost"
+  onClick={() => {
+    if (confirm("Are you sure you want to delete this interview?")) {
+      interview?.id && onDelete?.(interview.id);
+    }
+  }}
+  disbaled={false}
+  buttonClassName="hover:text-red-500"
+  icon={<Trash />}
+  loading={false}
+/>
         </div>
       )}
+      
 
      </CardFooter>
     </Card>

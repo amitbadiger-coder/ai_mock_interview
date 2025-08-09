@@ -16,7 +16,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { cn } from "@/lib/utils";
-import { Star } from "lucide-react";
+import { CircleCheck, Star } from "lucide-react";
+import { Card, CardDescription, CardTitle } from "../ui/card";
 
 
 const FeedbackPage = () => {
@@ -149,8 +150,18 @@ const FeedbackPage = () => {
                     <AccordionContent className="px-5 py-6 bg-white rounded-b-lg space-y-5 shadow-inner">
                       <div className="text-lg font-semibold to-gray-700">
                         <Star className="inline mr-2 text-yellow-500"/>
-                        :Rating{feed.rating}
+                        Rating:{feed.rating}
                       </div>
+                      <Card className="border-none space-y-3 p-4 bg-green-50 rounded-lg shadow-md">
+                  <CardTitle className="flex items-center text-lg">
+                    <CircleCheck className="mr-2 text-green-600" />
+                    Expected Answer
+                  </CardTitle>
+
+                  <CardDescription className="font-medium text-gray-700">
+                    {feed.correct_ans}
+                  </CardDescription>
+                </Card>
 
                     </AccordionContent>
                     </AccordionItem>

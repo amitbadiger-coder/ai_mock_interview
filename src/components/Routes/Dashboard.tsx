@@ -14,6 +14,9 @@ import type { Interview } from "@/types"
 import { Skeleton } from "../ui/skeleton"
 import InterviewPin from "../InterviewPin"
 
+import { deleteInterviewById } from "@/lib/deleteInterviewById";
+
+
 
 
 
@@ -71,7 +74,21 @@ const Dashboard = () => {
       ))
     ) : interviews.length > 0 ?
     (interviews.map((interview) => (
-      <InterviewPin key={interview.id} interview={interview}/>
+      <InterviewPin key={interview.id} interview={interview}
+     onDelete={(id) => {
+  deleteInterviewById(id)
+    .then(() => {
+      toast.success("Interview deleted!");
+
+      // ✅ Remove the deleted interview from state
+      setInterviews((prev) => prev.filter((item) => item.id !== id));
+    })
+    .catch((error) => {
+      console.error("Error deleting interview:", error);
+      toast.error("Failed to delete interview");
+    });
+}}
+      />
       ))
     ):(
        <div className="md:col-span-3 w-full flex flex-grow items-center justify-center h-96 flex-col">
