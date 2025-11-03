@@ -9,12 +9,13 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { Interview } from "@/types";
-import { useAuth } from "@clerk/clerk-react";
-import { Badge, Eye, Newspaper, Sparkle } from "lucide-react";
+import { Eye, Newspaper, Sparkle } from "lucide-react";
+
 // import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TooltipButton } from "./TooltipButton";
 import { Trash } from "lucide-react";
+import { Badge } from "./ui/badge";
 interface InterviewProp{
     interview:Interview;
     onMockPage?:boolean;
