@@ -14,6 +14,7 @@ import MockInterviewPage from "./components/Routes/MockInterviewPage"
 import FeedbackPage from "./components/Routes/FeedbackPage"
 import ContactPage from "./pages/ContactPage"
 import AboutUsPage from "./pages/AboutUsPage"
+import ResumeReader from "./components/ResumeReader"
 
 const App = () => {
   return (
@@ -40,6 +41,7 @@ const App = () => {
          <Route path="interview/:interviewId" element={<MockLoadPage/>}/>
          <Route path="interview/:interviewId/start" element={<MockInterviewPage/>}/>
          <Route path="feedback/:interviewId" element={<FeedbackPage/>}/>
+         <Route path="reader" element={<ResumeReader/>}/>
          
 
          </Route>

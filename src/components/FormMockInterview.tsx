@@ -47,7 +47,7 @@ const FormMockInterview = ({initialData}:FormMockInterviewprops) => {
   defaultValues: {
     position: initialData?.position ?? '',
     description: initialData?.description ?? '',
-    experience: initialData?.experience ?? '',
+    experience: initialData?.experience ?? 0,
     techStack: initialData?.techStack ?? '',
   },
 });
@@ -259,7 +259,8 @@ const FormMockInterview = ({initialData}:FormMockInterviewprops) => {
                   className="h-12"
                   placeholder="Eg:years in number"
                   {...field}
-                  // value={field.value }
+                  value={field.value ?? 0 }
+                  onChange={(e) => field.onChange(e.target.valueAsNumber)} 
                   />
                 </FormControl>
 

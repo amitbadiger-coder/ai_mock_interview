@@ -14,7 +14,7 @@ export const MainRoutes=[
         href:"/about",
     },
     {
-       label:"Services",
-        href:"/services",
+       label:"ResumeReader",
+        href:"/reader",
     },
 ];

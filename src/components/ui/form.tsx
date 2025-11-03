@@ -3,7 +3,6 @@ import * as LabelPrimitive from "@radix-ui/react-label"
 import { Slot } from "@radix-ui/react-slot"
 import {
   Controller,
-  FormProvider,
   useFormContext,
   type ControllerProps,
   type FieldPath,
@@ -13,25 +12,25 @@ import {
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
 
-const Form = FormProvider
+const Form = ({ ...props }) => <>{props.children}</>
 
 type FormFieldContextValue<
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TFieldValues extends FieldValues,
+  TName extends FieldPath<TFieldValues>
 > = {
   name: TName
 }
 
-const FormFieldContext = React.createContext<FormFieldContextValue>(
-  {} as FormFieldContextValue
+const FormFieldContext = React.createContext<FormFieldContextValue<any, any>>(
+  {} as FormFieldContextValue<any, any>
 )
 
 const FormField = <
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
->({
-  ...props
-}: ControllerProps<TFieldValues, TName>) => {
+  TFieldValues extends FieldValues,
+  TName extends FieldPath<TFieldValues>
+>(
+  props: ControllerProps<TFieldValues, TName>
+) => {
   return (
     <FormFieldContext.Provider value={{ name: props.name }}>
       <Controller {...props} />
@@ -45,10 +44,6 @@ const useFormField = () => {
   const { getFieldState, formState } = useFormContext()
 
   const fieldState = getFieldState(fieldContext.name, formState)
-
-  if (!fieldContext) {
-    throw new Error("useFormField should be used within <FormField>")
-  }
 
   const { id } = itemContext
 
@@ -105,7 +100,8 @@ const FormControl = React.forwardRef<
   React.ElementRef<typeof Slot>,
   React.ComponentPropsWithoutRef<typeof Slot>
 >(({ ...props }, ref) => {
-  const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
+  const { error, formDescriptionId, formMessageId, formItemId } =
+    useFormField()
 
   return (
     <Slot
@@ -165,7 +161,6 @@ const FormMessage = React.forwardRef<
 FormMessage.displayName = "FormMessage"
 
 export {
-  useFormField,
   Form,
   FormItem,
   FormLabel,
@@ -173,4 +168,5 @@ export {
   FormDescription,
   FormMessage,
   FormField,
+  useFormField,
 }

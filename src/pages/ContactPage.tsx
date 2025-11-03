@@ -18,7 +18,7 @@ const ContactPage = () => {
     if (isSignedIn && user?.primaryEmailAddress?.emailAddress) {
       setFormData((prev) => ({
         ...prev,
-        email: user.primaryEmailAddress.emailAddress || "",
+        email: user?.primaryEmailAddress?.emailAddress ?? " ",
       }));
     }
   }, [isSignedIn, user]);

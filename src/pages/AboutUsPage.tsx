@@ -1,25 +1,6 @@
 
 import Container from "@/components/Container";
 
-const team = [
- {
-    name: "Santosh Khot",
-    role: "proffesor & guide",
-    photo: "/logo1.png", // Replace with actual image paths
-  },
-   {
-    name: "Suneel Shinde",
-    role: "Head of Department",
-    photo: "/logo1.png", // Replace with actual image paths
-  },
-  
-  {
-    name: "Amit Badiger",
-    role: "Creater",
-    photo: "/team/mine1.jpeg",
-  },
-];
-
 const testimonials = [
   {
     quote: "Aispire helped me get through 5 real interviews with confidence!",

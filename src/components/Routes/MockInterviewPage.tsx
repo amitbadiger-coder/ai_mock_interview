@@ -1,20 +1,20 @@
 import { db } from '@/config/Firebase.config';
 import type { Interview } from '@/types';
 import { doc, getDoc } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import LoaderPage from '../LoaderPage';
 import { CustomBreakCrumb } from '../CustomBreakCrumb';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Lightbulb } from 'lucide-react';
-import QuestionsForm from '../ui/QuestionsForm';
+
 import QuestionsSection from '../ui/QuestionsForm';
 
 const MockInterviewPage = () => {
   const {interviewId}= useParams<{interviewId:string}>();
     const[interview,setInterview]=useState<Interview | null>(null);
     const navigate = useNavigate();
-    const[isloading,setIsLoading]=useState(false);
+    const[isloading]=useState(false);
 
     if(!interviewId){
         navigate("/generate",{replace:true});

@@ -1,5 +1,6 @@
 import { db } from "@/config/Firebase.config";
-import type { Interview, UserAnswer, UserAnswers } from "@/types";
+import type { Interview,  UserAnswers } from "@/types";
+// UserAnswer,
 import { useAuth } from "@clerk/clerk-react";
 import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useMemo, useState } from "react";
@@ -64,8 +65,8 @@ const FeedbackPage = () => {
 
           const querySnap = await getDocs(querSanpRef);
 
-          const interviewData: UserAnswer[] = querySnap.docs.map((doc) => {
-            return { id: doc.id, ...doc.data() } as UserAnswer;
+          const interviewData: UserAnswers[] = querySnap.docs.map((doc) => {
+            return { id: doc.id, ...doc.data() } as UserAnswers;
           });
 
           setFeedbacks(interviewData);
@@ -89,7 +90,7 @@ const FeedbackPage = () => {
     if (feedbacks.length === 0) return "0.0";
 
     const totalRatings = feedbacks.reduce(
-      (acc, feedback) => acc + feedback.rating,
+      (acc, feedback) => acc + Number(feedback.rating),
       0
     );
 

@@ -15,7 +15,7 @@ import Webcam  from "react-webcam"
 const MockLoadPage = () => {
     const {interviewId}= useParams<{interviewId:string}>();
     const[interview,setInterview]=useState<Interview | null>(null);
-    const[isloading,setIsLoading]=useState(false);
+    const[isloading]=useState(false);
     const[iswebCamEnabled,setIsWebCamEnabled]=useState(false);
 
     const navigate = useNavigate();
@@ -82,8 +82,8 @@ const MockLoadPage = () => {
         <div className="w-full h-[400px] md:w-96 flex flex-col items-center justify-center border p-4 bg-gray-50 rounded-md">
             {iswebCamEnabled ?(
                 <Webcam
-                onUseMedia={()=>setIsWebCamEnabled(true)}
-                onUseMediaError={()=>setIsWebCamEnabled(false)}
+                onUserMedia={()=>setIsWebCamEnabled(true)}
+                onUserMediaError={()=>setIsWebCamEnabled(false)}
                 className="w-full h-full object-cover rounded-md"
                 />
             ):(
