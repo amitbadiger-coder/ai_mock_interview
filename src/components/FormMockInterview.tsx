@@ -17,6 +17,9 @@ import { Textarea } from "./ui/textarea";
 import { chatSession } from "@/scripts";
 import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "@/config/Firebase.config";
+// import { generateText } from "@/scripts";
+
+
 
 
 interface FormMockInterviewprops{
@@ -110,6 +113,9 @@ const FormMockInterview = ({initialData}:FormMockInterviewprops) => {
     const aiResult = await chatSession.sendMessage(prompt);
     console.log(aiResult.response.text().trim())
     const cleanedResponse = cleanAiResponse(aiResult.response.text());
+    
+// const rawResponse = await generateText(prompt);
+// const cleanedResponse = cleanAiResponse(rawResponse);
 
     return cleanedResponse;
   } 
